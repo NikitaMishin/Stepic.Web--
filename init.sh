@@ -1,5 +1,6 @@
-sudo rm /etc/nginx/sites-enabled/default
-sudo ln -s /home/box/web/etc/nginx.conf  /etc/nginx/sites-enabled/default
+sudo ln -sf /home/box/web/etc/nginx.conf  /etc/nginx/sites-enabled/test.conf
+sudo rm -rf /etc/nginx/sites-enabled/default
 sudo /etc/init.d/nginx restart
-
-sudo gunicorn -b 0.0.0.0:8080 hello:app &
+sudo ln -sf /home/box/web/etc/guniconf.py   /etc/gunicorn.d/guniconf
+sudo /etc/init.d/gunicorn restart
+sudo gunicorn -c /etc/gunicorn.d/guniconf hello:app
