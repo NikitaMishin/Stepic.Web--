@@ -24,5 +24,5 @@ urlpatterns = [
     url(r"^new",views.test),
     url(r"^question/",include("qa.urls")),
     url(r'^admin/', admin.site.urls),
-    #url(r"^",include())
+    url(r"^$",views.test)
 ]
