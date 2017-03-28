@@ -4,7 +4,7 @@ class QuestionManager(models.Manager):
     def new(self):
         return self.objects.order_by('-added_at')
     def popular(self):
-        return   self.objects.order_by('-raiting')      
+        return   self.objects.order_by('-raiting')     
 
 class Question(models.Model):
     objects = QuestionManager()
