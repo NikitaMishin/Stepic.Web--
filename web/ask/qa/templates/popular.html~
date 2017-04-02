@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+   <body>
+   <nav>
+   <ul>
+   {% for p in paginator.page_range %}
+   <li>
+   <a href="{{paginator.baseurl}}"{{p}}>{{p}}</a>
+   </li>
+   {% endfor %}
+   </ul>
+   </nav>
+   
+   {% for question in questions %}
+    <p><a  href="{% url "undoQuestion" question_id=question.id %}>{{question.title}}</a></p>
+   {% endfor %}
+   </body>
+ </head>  
+
+
+</html>

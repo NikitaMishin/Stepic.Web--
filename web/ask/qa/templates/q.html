@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+   <title>{{question.title}}</title>
+   <body>
+   <h1>question.title </h1>
+   {{question.text}}
+   {% for answer in answers %}
+    <p>{{answer.text}}</p>
+   {% endfor %}
+   </body>
+ </head>  
+
+
+</html>

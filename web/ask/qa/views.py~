@@ -34,7 +34,6 @@ def displayPopularQuestion(request):
 def displayNewQuestion(request):
     page = request.GET.get('page',1)
     paginator= Paginator(Question.objects.new(),10)
-    paginator.baseurl ="/?page="
     try:
         page = paginator.page(page)
     except EmptyPage:
