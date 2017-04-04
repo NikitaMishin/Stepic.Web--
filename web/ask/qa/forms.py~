@@ -26,22 +26,21 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea())
+    question = forms.IntegerField(widget=forms.HiddenInput)
+
    # def __init__(self,*args,**kwargs):
         
        
     #    super(AnswerForm,self).__init__(args,**kwargs)
     
     def clean(self):
-        pass         
+        pass
+                 
     def save(self,useros,question):
         self.cleaned_data['author'] = useros
         self.cleaned_data['question']=question
         answer = Answer(**self.cleaned_data)
-        #answer.author = author
-       # answer.question=question 
+        answer.save()
         return answer
         
-        #self.cleaned_data['question'] = self.question
-        #self.cleaned_data['author'] = self.author 
-        #return Answer.objects.create(**self.cleaned_data)   
-    
+   

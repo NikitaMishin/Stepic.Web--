@@ -61,10 +61,10 @@ def undoQuestion(request,question_id):
             #form.author=request.user
             #form.question=question
             post = form.save(request.user,question)
-            url ="/" #post.get_url() 
+            url =post.get_url() 
             return HttpResponseRedirect(url) 
     else:
-        form = AnswerForm()
+        form = AnswerForm(initial={'question': question.id})
     return render(request,"q.html",{"question":question,"answers":answers,"form":form})  
     
 
