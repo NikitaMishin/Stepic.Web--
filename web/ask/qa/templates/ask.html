@@ -3,20 +3,15 @@
 <html>
  <head>
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-   <title>{{question.title}}</title>
+   <title>Ask a question</title>
  </head>  
    <body>
-   <h1>{{question.title}} </h1>
-   {{question.text}}
-   {% for answer in answers %}
-    <p>{{answer.text}}</p>
-   {% endfor %}
+  
   <form action="" method="post">
   {% csrf_token %}
   {{form.as_p }}
   <input type = "submit" value="Add">
   </form>
-  
    </body>
 
 
