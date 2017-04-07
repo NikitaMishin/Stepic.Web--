@@ -79,7 +79,9 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             post = form.save() 
-            return HttpResponseRedirect("/") 
+            if post is not None:
+            login(request,post)
+            return HttpResponseRedirect("/")##need terunr to prev 
     else:
         form = SignUpForm()
     return render(request,"signup.html",{"form":form})    
