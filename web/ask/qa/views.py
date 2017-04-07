@@ -87,16 +87,13 @@ def signup(request):
     return render(request,"signup.html",{"form":form})    
     
 def login_user(request):
-    if request.method=="POST":   
-        user_login = request.POST.get("user")
-        form = LoginForm(initial={"username":user_login})
-        password = request.POST.get("password")
-        user =  authenticate(username=user_login,password=password)
-        if user is not None:
-            login(request,user)
-            return HttpResponseRedirect("/")##need terunr to prev 
-           
-    else:
-        form = LoginForm()
+    if request.method=="POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            if user is not None:
+                login(request,user)
+                return HttpResponseRedirect("/")##need terunr to prev   
+    form = LoginForm()
     return render(request,"login.html",{"form":form})    
     

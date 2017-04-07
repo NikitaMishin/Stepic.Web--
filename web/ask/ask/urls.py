@@ -23,7 +23,7 @@ urlpatterns = [
     url(r"^question/$",views.test),
     url(r"^question/(?P<question_id>\d+)/$",views.undoQuestion,name="undoQuestion"),
     url(r"^login/$",views.login_user,name='login'),
-    url(r'^signup/$',views.signup,name='signup'),
+    url(r'^signup/',views.signup,name='signup'),
     url(r'^admin/', admin.site.urls),
     url(r'^ask/$', views.ask,name="ask"),
     url(r"^$",views.displayNewQuestion),
