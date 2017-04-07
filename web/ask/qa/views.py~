@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from qa.models import *
+from django.urls import reverse
 from django.http import HttpResponse,HttpResponseRedirect,Http404
 from django.core.paginator import Paginator, InvalidPage,EmptyPage
+from django.contrib.auth import authenticate, login
 from qa.forms import *
 def test (request):
     return HttpResponse('OK')
@@ -41,13 +43,15 @@ def ask(request):
     if request.method=="POST":
         form = AskForm(request.POST)
         if form.is_valid():
-            post = form.save()
+            post = form.save(request.user)
             url =  post.get_url() 
             return HttpResponseRedirect(url)
     else:
-        form = AskForm(user_id=request.user.id)
-    return render(request,"ask.html",{"form":form})            
-
+        if  request.user.is_authenticated: 
+            form = AskForm()
+            return render(request,"ask.html",{"form":form})            
+        return HttpResponseRedirect(reverse('login'))
+        
 def undoQuestion(request,question_id):
     user_id=request.user.id
     try:
@@ -61,15 +65,36 @@ def undoQuestion(request,question_id):
             #form.author=request.user
             #form.question=question
             post = form.save(request.user,question)
-            url =post.get_url() 
+            url = post.get_url() 
             return HttpResponseRedirect(url) 
     else:
-        form = AnswerForm(initial={'question': question.id})
-    return render(request,"q.html",{"question":question,"answers":answers,"form":form})  
+        if not request.user.is_authenticated:
+            return render(request,"q1.html",{"question":question,"answers":answers})
+        form=AnswerForm(initial={"question":question.id})        
+    return render(request,"q.html",{"question":question,"answers":answers,"form":form})
+
+
+def signup(request):
+    if request.method=="POST":   
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            post = form.save() 
+            return HttpResponseRedirect("/") 
+    else:
+        form = SignUpForm()
+    return render(request,"signup.html",{"form":form})    
     
-
-
-
-
-
-# Create your views here.
+def login_user(request):
+    if request.method=="POST":   
+        user_login = request.POST.get("user")
+        form = LoginForm(initial={"username":user_login})
+        password = request.POST.get("password")
+        user =  authenticate(username=user_login,password=password)
+        if user is not None:
+            login(request,user)
+            return HttpResponseRedirect("/")##need terunr to prev 
+           
+    else:
+        form = LoginForm()
+    return render(request,"login.html",{"form":form})    
+    
