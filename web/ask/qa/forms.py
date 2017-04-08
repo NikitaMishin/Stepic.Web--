@@ -33,7 +33,11 @@ class AskForm(forms.Form):
        # super(AskForm,self).__init__(*args,**kwargs) 
    
     def save(self,user):
-        question = Question(**self.cleaned_data,author=user)
+        if user.is_anonymous():
+            self.cleaned_data['author']=User.objects.get(pk=1)
+        else:
+            self.cleaned_data['author']=user
+        question = Question(**self.cleaned_data)
         question.save()
         return question
 

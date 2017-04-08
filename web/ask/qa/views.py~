@@ -47,10 +47,10 @@ def ask(request):
             url =  post.get_url() 
             return HttpResponseRedirect(url)
     else:
-        if  request.user.is_authenticated: 
+        
             form = AskForm()
-            return render(request,"ask.html",{"form":form})            
-        return HttpResponseRedirect(reverse('login'))
+        return render(request,"ask.html",{"form":form})            
+        #return HttpResponseRedirect(reverse('login'))
         
 def undoQuestion(request,question_id):
     user_id=request.user.id
